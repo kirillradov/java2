@@ -9,14 +9,27 @@ public class Main {
 
         namesInfo(arrNames);
 
+        PhoneBook phoneBook = new PhoneBook();
+        phoneBook.add("89153334443","Иванов");
+        phoneBook.add("89155634443","Петров");
+        phoneBook.add( "89153383943","Сидоров");
+        phoneBook.add( "89153334243","Путин");
+        phoneBook.add( "89153834443","Клинтон");
+        phoneBook.add( "89151234443","Иванов");
+        phoneBook.add( "89153334490","Иванов");
+
+        phoneBook.get("Иванов");
+
     }
     public static void namesInfo(String[] arrNames) {
         Set<String> names = new HashSet<>(Arrays.asList(arrNames));
         System.out.println("Уникальные имена: ");
-        for (String name : names) {
-            System.out.println(name);
+        Iterator<String> iter = names.iterator();
+        while (iter.hasNext()) {
+            System.out.println(iter.next());
         }
-        Set<String> namesCount = new HashSet<>();
+
+        HashMap<String, Integer> namesCount = new HashMap<>();
         ArrayList<String> listNames = new ArrayList<>(Arrays.asList(arrNames));
         System.out.println();
         for(int i = 0; i < listNames.size(); i++) {
@@ -27,12 +40,10 @@ public class Main {
                     count++;
                 }
             }
-            namesCount.add(name + " - " + count);
+            namesCount.put(name, count);
         }
-
-        for (String name : namesCount) {
-            System.out.println(name);
-        }
-
+        namesCount.entrySet()
+                .stream().sorted(Map.Entry.<String, Integer>comparingByValue().reversed())
+                .forEach(System.out::println);
     }
 }
